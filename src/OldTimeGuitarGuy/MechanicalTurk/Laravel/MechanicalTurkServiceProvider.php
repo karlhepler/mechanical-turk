@@ -36,7 +36,7 @@ class MechanicalTurkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(function($app) {
+        $this->app->singleton(Requester::class, function($app) {
             // Create the request object
             $request = new Request(
                 new GuzzleClient,
