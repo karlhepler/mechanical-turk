@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use OldTimeGuitarGuy\MechanicalTurk\Requester;
 use OldTimeGuitarGuy\MechanicalTurk\Http\Request;
 
-class MechanicalTurkServiceProvider extends Provider
+class MechanicalTurkServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
