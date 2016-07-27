@@ -6,7 +6,7 @@ class GetReviewableHITsTest extends OperationTestCase
 {
     public function testSubmit()
     {
-        $response = $this->requester()->getReviewableHITs()->submit();
+        $response = $this->requester()->getReviewableHITs();
 
         $this->assertInstanceOf(Response::class, $response);
     }

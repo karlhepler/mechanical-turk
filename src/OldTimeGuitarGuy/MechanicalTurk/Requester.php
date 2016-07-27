@@ -22,6 +22,13 @@ class Requester
         'createHIT' => Operations\CreateHIT::class,
         'getReviewableHITs' => Operations\GetReviewableHITs::class,
         'registerHITType' => Operations\RegisterHITType::class,
+        'getAssignmentsForHIT' => Operations\GetAssignmentsForHIT::class,
+        'setHITAsReviewing' => Operations\SetHITAsReviewing::class,
+        'approveAssignment' => Operations\ApproveAssignment::class,
+        'approveRejectedAssignment' => Operations\ApproveRejectedAssignment::class,
+        'blockWorker' => Operations\BlockWorker::class,
+        'unblockWorker' => Operations\UnblockWorker::class,
+        'rejectAssignment' => Operations\RejectAssignment::class,
     ];
 
     /**
@@ -63,7 +70,20 @@ class Requester
     }
 
     /**
-     * Dynamically call an operation
+     * Submit an operation request
+     *
+     * @param  string $operation
+     * @param  array  $parameters
+     *
+     * @return \OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response
+     */
+    public function submit($operation, array $parameters = [])
+    {
+        return $this->make($operation, $parameters)->submit();
+    }
+
+    /**
+     * Dynamically submit an operation
      *
      * @param  string $method
      * @param  array  $arguments
@@ -73,6 +93,6 @@ class Requester
      */
     public function __call($method, array $arguments)
     {
-        return $this->make($method, isset($arguments[0]) ? $arguments[0] : []);
+        return $this->submit($method, isset($arguments[0]) ? $arguments[0] : []);
     }
 }

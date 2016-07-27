@@ -3,6 +3,17 @@ Mechanical Turk
 > The best damn Mechanical Turk Requester API Client ever made...
 > or is it? You decide... or don't. Maybe you're indecisive. How would I know?
 
+As you can probably tell, this is not a complete implementation. Feel free to contribute, but please reference the contribution guidelines below. Thank you!
+
+Installation
+-------------
+
+Usage
+-------------
+
+Laravel
+-------------
+
 Contributing
 -------------
 

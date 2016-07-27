@@ -17,7 +17,7 @@ class Response implements ResponseContract
     /**
      * The response content
      *
-     * @var \stdClass
+     * @var \SimpleXMLElement
      */
     protected $content;
 
@@ -57,7 +57,7 @@ class Response implements ResponseContract
      *
      * @param  string $value
      *
-     * @return mixed
+     * @return \SimpleXMLElement
      */
     public function __get($value)
     {

@@ -12,7 +12,7 @@ class OperationTestCase extends TestCase
      *
      * @var \OldTimeGuitarGuy\MechanicalTurk\Requester
      */
-    private $requester;
+    private static $requester;
 
     /**
      * Get the singleton instance of the requester
@@ -21,8 +21,8 @@ class OperationTestCase extends TestCase
      */
     protected function requester()
     {
-        if (isset($this->requester)) {
-            return $requester;
+        if (isset(self::$requester)) {
+            return self::$requester;
         }
 
         // Get the config
@@ -32,6 +32,26 @@ class OperationTestCase extends TestCase
         $request = new Request(new GuzzleClient, $config['accessKeyId'], $config['secretAccessKey']);
 
         // Create, save, & return the requester
-        return $this->requester = new Requester($request);
+        return self::$requester = new Requester($request);
+    }
+
+    /**
+     * Get some test data for creating a hit
+     *
+     * @return array
+     */
+    protected function hitData()
+    {
+        return [
+            'Title' => 'Test Title '.time(),
+            'Description' => 'Test Description',
+            'Question' => file_get_contents(__DIR__.'/TestQuestion.xml'),
+            'Reward' => [
+                'Amount' => 0.3,
+                'CurrencyCode' => 'USD',
+            ],
+            'AssignmentDurationInSeconds' => 60*10,
+            'LifetimeInSeconds' => 60*10,
+        ];
     }
 }
