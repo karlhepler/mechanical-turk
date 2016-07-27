@@ -21,16 +21,51 @@ class Requester
     ];
 
     /**
-     * Instance cache
-     *
-     * @var array
-     */
-    protected $instances = [];
-
-    /**
-     * The http request object
+     * The Mechanical Turk request object
      *
      * @var Contracts\Http\Request
      */
     protected $request;
+
+    /**
+     * Create a new instance of Mechanical Turk Requester API Client.
+     * 
+     * @param   Contracts\Http\Request $request
+     */
+    public function __construct(Contracts\Http\Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Return an instance of the given operation
+     *
+     * @param  string $operation
+     * @param  array $parameters
+     *
+     * @return \OldTimeGuitarGuy\MechanicalTurk\Operations\Base\Operation
+     */
+    public function make($operation, array $parameters)
+    {
+        try {
+            return $this->operations[$operation]($this->request, $parameters);
+        }
+        catch (\Exception $e) {
+            throw new \BadMethodCallException("{$operation} is not a supported Mechanical Turk Requester operation.");
+        }
+    }
+
+    /**
+     * Dynamically call an operation
+     *
+     * @param  string $method
+     * @param  array  $arguments
+     * 
+     * @return mixed
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, array $arguments)
+    {
+        return $this->make($method, $arguments);
+    }
 }

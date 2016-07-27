@@ -8,7 +8,26 @@ namespace OldTimeGuitarGuy\MechanicalTurk\Operations;
  *
  * http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_CreateHITOperation.html
  */
-class CreateHIT
+class CreateHIT extends Base\Operation
 {
-    //
+    /**
+     * Determine if the given parameters satisfy this operation's requirements
+     *
+     * @param  array  $parameters
+     *
+     * @return boolean
+     */
+    protected function satisfiesRequirements(array $parameters)
+    {
+        if (isset($parameters['HITTypeId'])) {
+            return $this->isSetOn($parameters, [
+                'Operation', 'LifetimeInSeconds',
+            ]);
+        }
+
+        return $this->isSetOn($parameters, [
+            'Operation', 'Title', 'Description', 'Reward',
+            'AssignmentDurationInSeconds', 'LifetimeInSeconds',
+        ]);
+    }
 }
