@@ -72,19 +72,34 @@ abstract class Operation
      * Determine if the given keys are set on the given entity
      *
      * @param  array   $entity
-     * @param  array   $keys
+     * @param  array   $andKeys
+     * @param  array   $orKeys
      *
      * @return boolean
      */
-    protected function isSetOn(array $entity, array $keys)
+    protected function isSetOn(array $entity, array $andKeys, array $orKeys = [])
     {
-        foreach ($keys as $key) {
+        // If one andKey does not exist, return false
+        foreach ($andKeys as $key) {
             if (! isset($entity[$key])) {
                 return false;
             }
         }
 
-        return true;
+        // At this point, if there are no orKeys, return true
+        if (empty($orKeys)) {
+            return true;
+        }
+
+        // If one orKey exists, return true
+        foreach ($orKeys as $key) {
+            if (isset($entity[$key])) {
+                return true;
+            }
+        }
+
+        // No or keys exist - return false
+        return false;
     }
 
     /////////////////////
@@ -98,7 +113,7 @@ abstract class Operation
      */
     private function operation()
     {
-        preg_match('/\\(\w+)$/', static::class, $operation);
-        return $operation;
+        preg_match('/\\\(\w+)$/', static::class, $operation);
+        return $operation[1];
     }
 }

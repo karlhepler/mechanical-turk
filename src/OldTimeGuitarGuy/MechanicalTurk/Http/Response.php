@@ -5,7 +5,7 @@ namespace OldTimeGuitarGuy\MechanicalTurk\Http;
 use Psr\Http\Message\ResponseInterface;
 use OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response as ResponseContract;
 
-class Response extends ResponseContract
+class Response implements ResponseContract
 {
     /**
      * The response status code
@@ -29,7 +29,7 @@ class Response extends ResponseContract
     public function __construct(ResponseInterface $response)
     {
         $this->status = $response->getStatusCode();
-        $this->content = $response->getBody()->getContents();
+        $this->content = new \SimpleXmlElement($response->getBody()->getContents());
     }
 
     /**
@@ -40,6 +40,16 @@ class Response extends ResponseContract
     public function status()
     {
         return $this->status;
+    }
+
+    /**
+     * Determine if the response is valid
+     *
+     * @return boolean
+     */
+    public function isValid()
+    {
+        return count($this->content->xpath('//Request[IsValid="True"]')) > 0;
     }
 
     /**
@@ -61,6 +71,6 @@ class Response extends ResponseContract
      */
     public function __toString()
     {
-        return json_encode($this->content);
+        return $this->content->asXML();
     }
 }

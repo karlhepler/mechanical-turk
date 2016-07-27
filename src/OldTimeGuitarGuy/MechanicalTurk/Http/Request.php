@@ -76,22 +76,30 @@ class Request implements RequestContract
     public function get($operation, array $parameters)
     {
         try {
-            return new Response(
+            $response = new Response(
                 $this->http->request('GET', $this->base(), [
-                    'query' => array_merge($parameters, [
+                    'query' => array_merge([
                         'Service' => self::SERVICE,
                         'AWSAccessKeyId' => $this->accessKeyId,
                         'Version' => self::VERSION,
                         'Operation' => $operation,
                         'Signature' => $this->signature($operation),
                         'Timestamp' => $this->timestamp(),
-                    ])
+                    ], $this->format($parameters))
                 ])
             );
         }
         catch(BadResponseException $e) {
             throw new MechanicalTurkRequestException(new Response($e->getResponse()));
         }
+
+        // If the response is invalid, throw an exception
+        if (! $response->isValid()) {
+            throw new MechanicalTurkRequestException($response);
+        }
+
+        // All is good - return the respose
+        return $response;
     }
 
     ///////////////////////
@@ -120,7 +128,7 @@ class Request implements RequestContract
     protected function signature($operation)
     {
         $data = self::SERVICE . $operation . $this->timestamp();
-        return base64_encode(hash_hmac(MHASH_SHA1, $data, $this->secretAccessKey));
+        return base64_encode(mhash(MHASH_SHA1, $data, $this->secretAccessKey));
     }
 
     /**
@@ -135,5 +143,31 @@ class Request implements RequestContract
         }
 
         return $this->timestamp = gmdate('Y-m-d\TH:i:s\Z');
+    }
+
+    /**
+     * Format the parameters to be in line with the request requirements
+     *
+     * @param  array  $parameters
+     *
+     * @return array
+     */
+    protected function format(array $parameters)
+    {
+        $output = [];
+
+        foreach ($parameters as $key => $parameter) {
+            if (! is_array($parameter)) {
+                $output[$key] = $parameter;
+                continue;
+            }
+
+            foreach ($parameter as $subKey => $subParameter) {
+                $newKey = "{$key}.".($subKey+1).".{$subKey}";
+                $output[$newKey] = $subParameter;
+            }
+        }
+
+        return $output;
     }
 }

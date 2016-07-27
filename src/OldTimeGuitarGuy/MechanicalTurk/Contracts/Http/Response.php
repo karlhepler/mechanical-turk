@@ -12,6 +12,13 @@ interface Response
     public function status();
 
     /**
+     * Determine if the response is valid
+     *
+     * @return boolean
+     */
+    public function isValid();
+
+    /**
      * Directly reference the content object
      *
      * @param  string $value

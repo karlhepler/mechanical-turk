@@ -2,6 +2,8 @@
 
 namespace OldTimeGuitarGuy\MechanicalTurk;
 
+use OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkOperationException;
+
 /**
  * The main entry point for the API Client.
  * 
@@ -48,7 +50,10 @@ class Requester
     public function make($operation, array $parameters)
     {
         try {
-            return $this->operations[$operation]($this->request, $parameters);
+            return new $this->operations[$operation]($this->request, $parameters);
+        }
+        catch (MechanicalTurkOperationException $e) {
+            throw $e;
         }
         catch (\Exception $e) {
             throw new \BadMethodCallException("{$operation} is not a supported Mechanical Turk Requester operation.");
@@ -66,6 +71,6 @@ class Requester
      */
     public function __call($method, array $arguments)
     {
-        return $this->make($method, $arguments);
+        return $this->make($method, $arguments[0]);
     }
 }

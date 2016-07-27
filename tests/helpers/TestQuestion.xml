@@ -1,0 +1,17 @@
+<QuestionForm xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd">
+    <Overview>
+        <Title>Test Overview Title</Title>
+        <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, illo eveniet. Sed, ut aperiam ad doloribus fuga debitis. Ducimus repellendus accusantium accusamus repudiandae deserunt quis maxime officia quia, nostrum possimus.</Text>
+    </Overview>
+    <Question>
+        <QuestionIdentifier>test_question_id_1</QuestionIdentifier>
+        <DisplayName>The First Test Question</DisplayName>
+        <IsRequired>true</IsRequired>
+        <QuestionContent>
+            <Text>What is the square root of -1?</Text>
+        </QuestionContent>
+        <AnswerSpecification>
+            <FreeTextAnswer></FreeTextAnswer>
+        </AnswerSpecification>
+    </Question>
+</QuestionForm>

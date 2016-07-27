@@ -21,10 +21,11 @@ class MechanicalTurkOperationException extends \Exception
     public function __construct($operation)
     {
         // Construct the message
-        $message = "The provided parameters do not satisfy the requirements for {$operation}. Please reference the documentation for more information.";
-        $documentation = $this->documentation[$className];
+        $message = "The provided parameters do not satisfy the requirements of {$operation}.".PHP_EOL;
+        $message .= "Please reference the documentation for more information.".PHP_EOL;
+        $message .= $this->documentation[$operation];
 
         // Call the parent
-        parent::__construct($message.PHP_EOL.$documentation);
+        parent::__construct($message);
     }
 }

@@ -21,13 +21,22 @@ class CreateHIT extends Base\Operation
     {
         if (isset($parameters['HITTypeId'])) {
             return $this->isSetOn($parameters, [
-                'Operation', 'LifetimeInSeconds',
+                'LifetimeInSeconds',
+            ], [
+                'Question',
+                'HITLayoutId',
             ]);
         }
 
         return $this->isSetOn($parameters, [
-            'Operation', 'Title', 'Description', 'Reward',
-            'AssignmentDurationInSeconds', 'LifetimeInSeconds',
+            'Title',
+            'Description',
+            'Reward',
+            'AssignmentDurationInSeconds',
+            'LifetimeInSeconds',
+        ], [
+            'Question',
+            'HITLayoutId',
         ]);
     }
 }
