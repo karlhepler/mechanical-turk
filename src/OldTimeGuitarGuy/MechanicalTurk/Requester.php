@@ -20,6 +20,8 @@ class Requester
      */
     protected $operations = [
         'createHIT' => Operations\CreateHIT::class,
+        'getReviewableHITs' => Operations\GetReviewableHITs::class,
+        'registerHITType' => Operations\RegisterHITType::class,
     ];
 
     /**
@@ -47,7 +49,7 @@ class Requester
      *
      * @return \OldTimeGuitarGuy\MechanicalTurk\Operations\Base\Operation
      */
-    public function make($operation, array $parameters)
+    public function make($operation, array $parameters = [])
     {
         try {
             return new $this->operations[$operation]($this->request, $parameters);
@@ -71,6 +73,6 @@ class Requester
      */
     public function __call($method, array $arguments)
     {
-        return $this->make($method, $arguments[0]);
+        return $this->make($method, isset($arguments[0]) ? $arguments[0] : []);
     }
 }

@@ -2,7 +2,7 @@
 
 use OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response;
 
-class CreateHITTest extends OperationTestCase
+class RegisterHITTypeTest extends OperationTestCase
 {
     public function testSubmit()
     {
@@ -15,10 +15,9 @@ class CreateHITTest extends OperationTestCase
                 'CurrencyCode' => 'USD',
             ],
             'AssignmentDurationInSeconds' => 60*10,
-            'LifetimeInSeconds' => 60*10,
         ];
 
-        $response = $this->requester()->createHIT($data)->submit();
+        $response = $this->requester()->registerHITType($data)->submit();
 
         $this->assertInstanceOf(Response::class, $response);
     }

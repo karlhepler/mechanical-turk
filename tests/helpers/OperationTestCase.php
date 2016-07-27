@@ -7,6 +7,11 @@ use OldTimeGuitarGuy\MechanicalTurk\Http\Request;
 
 class OperationTestCase extends TestCase
 {
+    /**
+     * Singleton instance of requester
+     *
+     * @var \OldTimeGuitarGuy\MechanicalTurk\Requester
+     */
     private $requester;
 
     /**

@@ -11,6 +11,8 @@ class MechanicalTurkOperationException extends \Exception
      */
     protected $documentation = [
         'CreateHIT' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_CreateHITOperation.html',
+        'GetReviewableHITs' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_GetReviewableHITsOperation.html',
+        'RegisterHITType' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_RegisterHITTypeOperation.html',
     ];
 
     /**
