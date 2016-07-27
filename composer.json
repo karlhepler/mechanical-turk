@@ -1,0 +1,31 @@
+{
+    "name": "oldtimeguitarguy/mechanical-turk",
+    "description": "The best damn Mechanical Turk Requester API Client ever made...",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Karl Hepler",
+            "email": "khepler@brandmovers.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "OldTimeGuitarGuy\\MechanicalTurk\\": "src/OldTimeGuitarGuy/MechanicalTurk/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/helpers/OperationTestCase.php"
+        ],
+        "files": [
+            "tests/helpers/helpers.php"
+        ]
+    }
+}
