@@ -58,14 +58,15 @@ class Requester
      */
     public function make($operation, array $parameters = [])
     {
+        if (! isset($this->operations[$operation])) {
+            throw new \BadMethodCallException("{$operation} is not a supported Mechanical Turk Requester operation.");
+        }
+        
         try {
             return new $this->operations[$operation]($this->request, $parameters);
         }
         catch (MechanicalTurkOperationException $e) {
             throw $e;
-        }
-        catch (\Exception $e) {
-            throw new \BadMethodCallException("{$operation} is not a supported Mechanical Turk Requester operation.");
         }
     }
 
