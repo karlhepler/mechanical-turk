@@ -20,15 +20,15 @@ class Requester
      */
     protected $operations = [
         'createHIT' => Operations\CreateHIT::class,
-        'getReviewableHITs' => Operations\GetReviewableHITs::class,
-        'registerHITType' => Operations\RegisterHITType::class,
-        'getAssignmentsForHIT' => Operations\GetAssignmentsForHIT::class,
-        'setHITAsReviewing' => Operations\SetHITAsReviewing::class,
-        'approveAssignment' => Operations\ApproveAssignment::class,
-        'approveRejectedAssignment' => Operations\ApproveRejectedAssignment::class,
         'blockWorker' => Operations\BlockWorker::class,
         'unblockWorker' => Operations\UnblockWorker::class,
+        'registerHITType' => Operations\RegisterHITType::class,
         'rejectAssignment' => Operations\RejectAssignment::class,
+        'approveAssignment' => Operations\ApproveAssignment::class,
+        'getReviewableHITs' => Operations\GetReviewableHITs::class,
+        'setHITAsReviewing' => Operations\SetHITAsReviewing::class,
+        'getAssignmentsForHIT' => Operations\GetAssignmentsForHIT::class,
+        'approveRejectedAssignment' => Operations\ApproveRejectedAssignment::class,
     ];
 
     /**
