@@ -20,6 +20,7 @@ class MechanicalTurkOperationException extends \Exception
         'BlockWorker' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_BlockWorkerOperation.html',
         'UnblockWorker' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_UnblockWorkerOperation.html',
         'RejectAssignment' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_RejectAssignmentOperation.html',
+        'GetHIT' => 'http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_GetHITOperation.html',
     ];
 
     /**

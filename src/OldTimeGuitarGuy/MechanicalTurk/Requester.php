@@ -19,6 +19,7 @@ class Requester
      * @var array
      */
     protected $operations = [
+        'getHIT' => Operations\GetHIT::class,
         'createHIT' => Operations\CreateHIT::class,
         'blockWorker' => Operations\BlockWorker::class,
         'unblockWorker' => Operations\UnblockWorker::class,
