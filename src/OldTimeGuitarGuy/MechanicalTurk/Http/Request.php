@@ -72,6 +72,8 @@ class Request implements RequestContract
      * @param  array  $parameters
      *
      * @return \OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response
+     *
+     * @throws \OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkRequestException
      */
     public function get($operation, array $parameters)
     {
@@ -79,12 +81,12 @@ class Request implements RequestContract
             $response = new Response(
                 $this->http->request('GET', $this->base(), [
                     'query' => array_merge([
-                        'Service' => self::SERVICE,
-                        'AWSAccessKeyId' => $this->accessKeyId,
-                        'Version' => self::VERSION,
                         'Operation' => $operation,
-                        'Signature' => $this->signature($operation),
+                        'Service' => self::SERVICE,
+                        'Version' => self::VERSION,
                         'Timestamp' => $this->timestamp(),
+                        'AWSAccessKeyId' => $this->accessKeyId,
+                        'Signature' => $this->signature($operation),
                     ], $this->format($parameters))
                 ])
             );

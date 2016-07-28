@@ -22,9 +22,7 @@ class CreateHIT extends Base\Operation
         if (isset($parameters['HITTypeId'])) {
             return $this->isSetOn($parameters, [
                 'LifetimeInSeconds',
-            ], [
-                'Question',
-                'HITLayoutId',
+                ['Question', 'HITLayoutId'],
             ]);
         }
 
@@ -34,9 +32,7 @@ class CreateHIT extends Base\Operation
             'Reward',
             'AssignmentDurationInSeconds',
             'LifetimeInSeconds',
-        ], [
-            'Question',
-            'HITLayoutId',
+            ['Question', 'HITLayoutId'],
         ]);
     }
 }

@@ -26,6 +26,8 @@ abstract class Operation
      *
      * @param Request $request
      * @param array   $parameters
+     *
+     * @throws \OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkOperationException
      */
     public function __construct(Request $request, array $parameters)
     {
@@ -72,34 +74,32 @@ abstract class Operation
      * Determine if the given keys are set on the given entity
      *
      * @param  array   $entity
-     * @param  array   $andKeys
-     * @param  array   $orKeys
+     * @param  array   $keys
      *
      * @return boolean
      */
-    protected function isSetOn(array $entity, array $andKeys, array $orKeys = [])
+    protected function isSetOn(array $entity, array $keys)
     {
-        // If one andKey does not exist, return false
-        foreach ($andKeys as $key) {
-            if (! isset($entity[$key])) {
+        foreach ($keys as $key) {
+            // It's an array - at least ONE of the keys must exist
+            if (is_array($key)) {
+                foreach ($key as $orKey) {
+                    // We can stop checking if one is set
+                    if (isset($entity[$orKey])) {
+                        break;
+                    }
+                    // None are set! Return false!
+                    return false;
+                }
+            }
+            // It's not an array - so make sure it's there
+            elseif (! isset($entity[$key])) {
                 return false;
             }
         }
 
-        // At this point, if there are no orKeys, return true
-        if (empty($orKeys)) {
-            return true;
-        }
-
-        // If one orKey exists, return true
-        foreach ($orKeys as $key) {
-            if (isset($entity[$key])) {
-                return true;
-            }
-        }
-
-        // No or keys exist - return false
-        return false;
+        // Everything is good!
+        return true;
     }
 
     /////////////////////
