@@ -148,26 +148,23 @@ class Request implements RequestContract
     }
 
     /**
-     * Format the parameters to be in line with the request requirements
+     * Format the parameters to be in line with the request requirements.
+     * This recursively builds deep query parameters.
      *
      * @param  array  $parameters
      *
      * @return array
      */
-    protected function format(array $parameters)
+    protected function format(array $input, array $output = [], $prefix = '', $depth = 0)
     {
-        $output = [];
-
-        foreach ($parameters as $key => $parameter) {
-            if (! is_array($parameter)) {
-                $output[$key] = $parameter;
+        foreach ($input as $key => $value) {
+            if (! is_array($value)) {
+                $output["{$prefix}{$key}"] = $value;
                 continue;
             }
 
-            foreach ($parameter as $subKey => $subParameter) {
-                $newKey = "{$key}.".($subKey+1).".{$subKey}";
-                $output[$newKey] = $subParameter;
-            }
+            $newDepth = $depth + 1;
+            $output = $this->format($value, $output, "{$key}.{$newDepth}.", $newDepth);
         }
 
         return $output;
