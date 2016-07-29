@@ -29,6 +29,7 @@ class Requester
         'getReviewableHITs' => Operations\GetReviewableHITs::class,
         'setHITAsReviewing' => Operations\SetHITAsReviewing::class,
         'getAssignmentsForHIT' => Operations\GetAssignmentsForHIT::class,
+        'getReviewResultsForHIT' => Operations\GetReviewResultsForHIT::class,
         'approveRejectedAssignment' => Operations\ApproveRejectedAssignment::class,
     ];
 
