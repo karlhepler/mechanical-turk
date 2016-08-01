@@ -17,8 +17,6 @@ class GetReviewResultsForHITTest extends OperationTestCase
         // Get the response
         $response = $this->requester()->getReviewResultsForHIT($query);
 
-        dd($response);
-
         // Make sure it's valid
         $this->assertInstanceOf(Response::class, $response);
     }

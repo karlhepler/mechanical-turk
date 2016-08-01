@@ -155,16 +155,18 @@ class Request implements RequestContract
      *
      * @return array
      */
-    protected function format(array $input, array $output = [], $prefix = '', $depth = 0)
+    protected function format(array $parameters, $prefix = '')
     {
-        foreach ($input as $key => $value) {
-            if (! is_array($value)) {
-                $output["{$prefix}{$key}"] = $value;
+        $output = [];
+        foreach ($parameters as $key => $value) {
+            $index = is_int($key) ? $key+1 : $key;
+
+            if (is_array($value)) {
+                $output += $this->format($value, "{$prefix}{$index}.");
                 continue;
             }
 
-            $newDepth = $depth + 1;
-            $output = $this->format($value, $output, "{$key}.{$newDepth}.", $newDepth);
+            $output["{$prefix}{$index}"] = $value;
         }
 
         return $output;
