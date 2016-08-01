@@ -29,7 +29,11 @@ class Response implements ResponseContract
     public function __construct(ResponseInterface $response)
     {
         $this->status = $response->getStatusCode();
-        $this->content = new \SimpleXmlElement($response->getBody()->getContents());
+
+        $contents = $response->getBody()->getContents()
+            ?: '<empty status="'.$this->status.'"></empty>';
+
+        $this->content = new \SimpleXmlElement($contents);
     }
 
     /**

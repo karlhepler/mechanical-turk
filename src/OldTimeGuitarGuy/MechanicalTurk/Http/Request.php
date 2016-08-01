@@ -66,7 +66,7 @@ class Request implements RequestContract
     ////////////////////
 
     /**
-     * Make a GET request to the API
+     * Make a POST request to the API
      *
      * @param  string $operation
      * @param  array  $parameters
@@ -75,12 +75,12 @@ class Request implements RequestContract
      *
      * @throws \OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkRequestException
      */
-    public function get($operation, array $parameters)
+    public function post($operation, array $parameters)
     {
         try {
             $response = new Response(
-                $this->http->request('GET', $this->base(), [
-                    'query' => array_merge([
+                $this->http->request('POST', $this->base(), [
+                    'form_params' => array_merge([
                         'Operation' => $operation,
                         'Service' => self::SERVICE,
                         'Version' => self::VERSION,

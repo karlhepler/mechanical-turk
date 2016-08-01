@@ -63,7 +63,7 @@ abstract class Operation
      */
     public function submit()
     {
-        return $this->request->get($this->operation(), $this->parameters);
+        return $this->request->post($this->operation(), $this->parameters);
     }
 
     ///////////////////////

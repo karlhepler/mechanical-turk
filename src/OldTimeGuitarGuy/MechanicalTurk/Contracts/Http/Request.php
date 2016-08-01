@@ -10,12 +10,12 @@ interface Request
     const SERVICE = 'AWSMechanicalTurkRequester';
 
     /**
-     * Make a GET request to the API
+     * Make a POST request to the API
      *
      * @param  string $operation
      * @param  array  $parameters
      *
      * @return \OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response
      */
-    public function get($operation, array $parameters);
+    public function post($operation, array $parameters);
 }
