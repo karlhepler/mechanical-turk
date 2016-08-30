@@ -100,7 +100,7 @@ class Request implements RequestContract
             throw new MechanicalTurkRequestException($response);
         }
 
-        // All is good - return the respose
+        // All is good - return the response
         return $response;
     }
 
