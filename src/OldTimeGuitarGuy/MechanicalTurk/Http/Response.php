@@ -2,6 +2,7 @@
 
 namespace OldTimeGuitarGuy\MechanicalTurk\Http;
 
+use SimpleXmlElement;
 use Psr\Http\Message\ResponseInterface;
 use OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response as ResponseContract;
 
@@ -17,9 +18,16 @@ class Response implements ResponseContract
     /**
      * The response content
      *
-     * @var \SimpleXMLElement
+     * @var \stdClass
      */
     protected $content;
+
+    /**
+     * Determines whether or not the response is valid
+     *
+     * @var boolean
+     */
+    protected $isValid;
 
     /**
      * Create a new instance of Mechanical Turk response
@@ -30,10 +38,14 @@ class Response implements ResponseContract
     {
         $this->status = $response->getStatusCode();
 
-        $contents = $response->getBody()->getContents()
-            ?: '<empty status="'.$this->status.'"></empty>';
+        $contents = new SimpleXmlElement(
+            $response->getBody()->getContents()
+            ?: '<empty status="'.$this->status.'"></empty>'
+        );
 
-        $this->content = new \SimpleXmlElement($contents);
+        $this->isValid = count($contents->xpath('//Request[IsValid="True"]')) > 0;
+
+        $this->content = json_decode(json_encode($contents));
     }
 
     /**
@@ -53,7 +65,7 @@ class Response implements ResponseContract
      */
     public function isValid()
     {
-        return count($this->content->xpath('//Request[IsValid="True"]')) > 0;
+        return $this->isValid;
     }
 
     /**
@@ -61,7 +73,7 @@ class Response implements ResponseContract
      *
      * @param  string $value
      *
-     * @return \SimpleXMLElement
+     * @return mixed
      */
     public function __get($value)
     {
@@ -75,6 +87,6 @@ class Response implements ResponseContract
      */
     public function __toString()
     {
-        return $this->content->asXML();
+        return json_encode($this->content);
     }
 }
