@@ -1,6 +1,6 @@
 {
     "name": "oldtimeguitarguy/mechanical-turk",
-    "description": "The best damn Mechanical Turk Requester API Client ever made...",
+    "description": "An easily-extensible php client for the Amazon Mechanical Turk API",
     "require": {
         "guzzlehttp/guzzle": "^6.2"
     },
