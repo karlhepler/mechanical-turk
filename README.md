@@ -1,7 +1,6 @@
 Mechanical Turk
 ================
-> The best damn Mechanical Turk Requester API Client ever made...
-> or is it? You decide... or don't. Maybe you're indecisive. How would I know?
+> An easily-extensible php client for the Amazon Mechanical Turk API
 
 As you can probably tell, this is not a complete implementation. Feel free to contribute, but please reference the contribution guidelines below. Thank you!
 
