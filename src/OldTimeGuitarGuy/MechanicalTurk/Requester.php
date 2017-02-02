@@ -9,7 +9,7 @@ use OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkOperationException;
  * 
  * http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/Welcome.html
  */
-class Requester
+class Requester implements Contracts\Requester
 {
     /**
      * Supported operations
