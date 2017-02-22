@@ -113,7 +113,7 @@ class Response implements ResponseContract
      *
      * @param  string $value
      *
-     * @return \SimpleXMLElement
+     * @return mixed
      */
     public function __get($value)
     {

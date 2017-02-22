@@ -38,7 +38,7 @@ interface Response
      *
      * @param  string $value
      *
-     * @return \SimpleXMLElement
+     * @return mixed
      */
     public function __get($value);
 
