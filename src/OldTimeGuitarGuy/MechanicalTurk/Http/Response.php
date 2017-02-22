@@ -13,21 +13,35 @@ class Response implements ResponseContract
      *
      * @var integer
      */
-    protected $status;
+    private $status;
 
     /**
      * The response content
      *
-     * @var \stdClass
+     * @var string
      */
-    protected $content;
+    private $content;
 
     /**
      * Determines whether or not the response is valid
      *
      * @var boolean
      */
-    protected $isValid;
+    private $isValid;
+
+    /**
+     * The SimpleXMLElement representation of the content
+     *
+     * @var \SimpleXMLElement
+     */
+    private $xml;
+
+    /**
+     * The json representation of the content
+     *
+     * @var \stdClass
+     */
+    private $json;
 
     /**
      * Create a new instance of Mechanical Turk response
@@ -37,15 +51,8 @@ class Response implements ResponseContract
     public function __construct(ResponseInterface $response)
     {
         $this->status = $response->getStatusCode();
-
-        $contents = new SimpleXmlElement(
-            $response->getBody()->getContents()
-            ?: '<empty status="'.$this->status.'"></empty>'
-        );
-
-        $this->isValid = count($contents->xpath('//Request[IsValid="True"]')) > 0;
-
-        $this->content = json_decode(json_encode($contents));
+        $this->content = $response->getBody()->getContents()
+            ?: '<empty status="'.$this->status().'"></empty>';
     }
 
     /**
@@ -65,7 +72,40 @@ class Response implements ResponseContract
      */
     public function isValid()
     {
+        if (! isset($this->isValid)) {
+            $this->isValid = count($this->xml()->xpath('//Request[IsValid="True"]')) > 0;
+        }
+
         return $this->isValid;
+    }
+
+    /**
+     * Get the simple xml representation of the content
+     *
+     * @return \SimpleXmlElement
+     */
+    public function xml()
+    {
+        if (! isset($this->xml)) {
+            $this->xml = new SimpleXmlElement($this->content);
+        }
+
+        return $this->xml;
+    }
+
+    /**
+     * Get the json representation of the content
+     *
+     * @param  boolean $isArray
+     * @return \stdClass
+     */
+    public function json($isArray = false)
+    {
+        if (! isset($this->json)) {
+            $this->json = json_decode(json_encode($this->content), $isArray);
+        }
+
+        return $this->json;
     }
 
     /**
@@ -73,11 +113,11 @@ class Response implements ResponseContract
      *
      * @param  string $value
      *
-     * @return mixed
+     * @return \SimpleXMLElement
      */
     public function __get($value)
     {
-        return $this->content->{$value};
+        return $this->json()->{$value};
     }
 
     /**

@@ -19,6 +19,21 @@ interface Response
     public function isValid();
 
     /**
+     * Get the simple xml representation of the content
+     *
+     * @return \SimpleXmlElement
+     */
+    public function xml();
+
+    /**
+     * Get the json representation of the content
+     *
+     * @param  boolean $isArray
+     * @return \stdClass
+     */
+    public function json($isArray = false);
+
+    /**
      * Directly reference the content object
      *
      * @param  string $value
