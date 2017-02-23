@@ -41,6 +41,14 @@ class Requester implements Contracts\Requester
     protected $request;
 
     /**
+     * Determine if it should retry
+     * after receiving a rate limit error.
+     *
+     * @var boolean
+     */
+    protected $retryOnRateLimit = false;
+
+    /**
      * Create a new instance of Mechanical Turk Requester API Client.
      * 
      * @param   Contracts\Http\Request $request
@@ -66,7 +74,7 @@ class Requester implements Contracts\Requester
             throw new \BadMethodCallException("{$operation} is not a supported Mechanical Turk Requester operation.");
         }
         
-        return new $this->operations[$operation]($this->request, $parameters);
+        return new $this->operations[$operation]($this->request, $parameters, $this->retryOnRateLimit);
     }
 
     /**
@@ -80,6 +88,17 @@ class Requester implements Contracts\Requester
     public function submit($operation, array $parameters = [])
     {
         return $this->make($operation, $parameters)->submit();
+    }
+
+    /**
+     * Set whether or not it should retry
+     * if it encounters a rate limit error
+     *
+     * @param  boolean $shouldRetry
+     */
+    public function setRetryOnRateLimit($shouldRetry)
+    {
+        $this->retryOnRateLimit = $shouldRetry;
     }
 
     /**

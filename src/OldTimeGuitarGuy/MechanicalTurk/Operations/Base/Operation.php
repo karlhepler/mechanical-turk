@@ -3,6 +3,7 @@
 namespace OldTimeGuitarGuy\MechanicalTurk\Operations\Base;
 
 use OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Request;
+use OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkRequestException;
 use OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkOperationException;
 
 abstract class Operation
@@ -22,14 +23,23 @@ abstract class Operation
     protected $parameters;
 
     /**
+     * Determine if it should retry
+     * after receiving a rate limit error.
+     *
+     * @var boolean
+     */
+    protected $retryOnRateLimit;
+
+    /**
      * Create new instance of CreateHIT
      *
      * @param Request $request
      * @param array   $parameters
+     * @param boolean $retryOnRateLimit
      *
      * @throws \OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkOperationException
      */
-    public function __construct(Request $request, array $parameters)
+    public function __construct(Request $request, array $parameters, $retryOnRateLimit = false)
     {
         if (! $this->satisfiesRequirements($parameters)) {
             throw new MechanicalTurkOperationException($this->operation());
@@ -37,6 +47,7 @@ abstract class Operation
 
         $this->request = $request;
         $this->parameters = $parameters;
+        $this->retryOnRateLimit = $retryOnRateLimit;
     }
 
     //////////////////////
@@ -60,10 +71,20 @@ abstract class Operation
      * Submit the request to the Mechanical Turk Requester API
      *
      * @return \OldTimeGuitarGuy\MechanicalTurk\Contracts\Http\Response
+     * @throws \OldTimeGuitarGuy\MechanicalTurk\Exceptions\MechanicalTurkRequestException
      */
     public function submit()
     {
-        return $this->request->post($this->operation(), $this->parameters);
+        try {
+            return $this->request->post($this->operation(), $this->parameters);
+        } catch (MechanicalTurkRequestException $e) {
+            if ($this->retryOnRateLimit && $e->response()->status() === 503) {
+                sleep(30);
+                return $this->request->post($this->operation(), $this->parameters);
+            }
+
+            throw $e;
+        }
     }
 
     ///////////////////////

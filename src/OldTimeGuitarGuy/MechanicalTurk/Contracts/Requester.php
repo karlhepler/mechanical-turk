@@ -27,6 +27,14 @@ interface Requester
     public function submit($operation, array $parameters = []);
 
     /**
+     * Set whether or not it should retry
+     * if it encounters a rate limit error
+     *
+     * @param  mixed $shouldRetry
+     */
+    public function setRetryOnRateLimit($shouldRetry = false);
+
+    /**
      * Dynamically submit an operation
      *
      * @param  string $method
