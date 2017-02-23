@@ -26,6 +26,7 @@ class Requester implements Contracts\Requester
         'registerHITType' => Operations\RegisterHITType::class,
         'rejectAssignment' => Operations\RejectAssignment::class,
         'approveAssignment' => Operations\ApproveAssignment::class,
+        'getAccountBalance' => Operations\GetAccountBalance::class,
         'getReviewableHITs' => Operations\GetReviewableHITs::class,
         'setHITAsReviewing' => Operations\SetHITAsReviewing::class,
         'getAssignmentsForHIT' => Operations\GetAssignmentsForHIT::class,
