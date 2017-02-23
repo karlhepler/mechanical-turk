@@ -102,7 +102,7 @@ class Response implements ResponseContract
     public function json($isArray = false)
     {
         if (! isset($this->json)) {
-            $this->json = json_decode(json_encode($this->content), $isArray);
+            $this->json = json_decode(json_encode($this->xml()), $isArray);
         }
 
         return $this->json;
