@@ -127,6 +127,6 @@ class Response implements ResponseContract
      */
     public function __toString()
     {
-        return json_encode($this->content);
+        return $this->content;
     }
 }
