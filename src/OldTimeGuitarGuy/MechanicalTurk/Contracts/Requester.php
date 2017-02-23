@@ -31,6 +31,7 @@ interface Requester
      * if it encounters a rate limit error
      *
      * @param  mixed $shouldRetry
+     * @return $this
      */
     public function setRetryOnRateLimit($shouldRetry = false);
 

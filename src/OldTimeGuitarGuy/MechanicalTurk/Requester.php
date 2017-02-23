@@ -95,10 +95,12 @@ class Requester implements Contracts\Requester
      * if it encounters a rate limit error
      *
      * @param  boolean $shouldRetry
+     * @return $this
      */
     public function setRetryOnRateLimit($shouldRetry)
     {
         $this->retryOnRateLimit = $shouldRetry;
+        return $this;
     }
 
     /**
