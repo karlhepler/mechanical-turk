@@ -33,7 +33,7 @@ interface Requester
      * @param  mixed $shouldRetry
      * @return $this
      */
-    public function setRetryOnRateLimit($shouldRetry = false);
+    public function setRetryOnRateLimit($shouldRetry);
 
     /**
      * Dynamically submit an operation
