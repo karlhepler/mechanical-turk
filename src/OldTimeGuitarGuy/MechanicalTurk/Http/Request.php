@@ -39,13 +39,6 @@ class Request implements RequestContract
     protected $useSandbox;
 
     /**
-     * The current timestamp of the request
-     *
-     * @var string
-     */
-    protected $timestamp;
-
-    /**
      * Create a new instance of Mechanical Turk Requester API Client Request
      *
      * @param ClientInterface $http
@@ -140,11 +133,7 @@ class Request implements RequestContract
      */
     protected function timestamp()
     {
-        if (isset($this->timestamp)) {
-            return $this->timestamp;
-        }
-
-        return $this->timestamp = gmdate('Y-m-d\TH:i:s\Z');
+        return gmdate('Y-m-d\TH:i:s\Z');
     }
 
     /**
